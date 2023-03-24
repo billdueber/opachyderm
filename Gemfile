@@ -8,6 +8,8 @@ gem "sinatra", "~> 3"
 gem "rack"
 gem "puma"
 
+gem "zinzout"
+
 gem "faraday"
 gem "httpx"
 
