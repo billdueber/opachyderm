@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hi</title>
+    <style>@import url(/css/r-c-min.css)</style>
+    <script src="/javascripts/htmx.js"></script>
+    <style>
+      header { background-color: #c99;}
+      section { background-color: #afa; }
+      aside  { background-color: #159; }
+      footer { background-color: #999;}
+    </style>
+
+
+    </head>
+
+  <body data-r-c data-join>
+    <header data-lg1><h1>Opachyderm</h1>
+    <div id="searchbox"><form method="get" target="/search/easter">Search  <input type="text"/></form></div>
+    </header>
+
+    <main data-lg1-2>
+      <%= yield %>
+    </main>
+
+    <section data-sm1-2 data-lg1-4 data-lg2>
+      <h2>Facets and such</h2>
+      <div id="facets"></div>
+    </section>
+    <aside data-sm1-2 data-lg1-4><h2>Other stuff?</h2></aside>
+    <footer>Footer</footer>
+  </body>
+
+
+</html>
+
+      
+    
