@@ -1,0 +1,38 @@
+<article>
+<h3><%= doc["title_display"].first %></h3>
+<div class="fields">
+<dl class="entry">
+
+  <% main = doc["main_author_display"]&.first || doc["authorStr"]&.first
+     contribs = (doc["contributors_display"] or []) - [main]
+     formats = doc["format"] or []
+  %>
+
+  <%if formats.any? %>
+  <dt>Format</dt> 
+    <% formats.each do |format| %>
+        <dd><%= format %></dd>
+    <% end %>
+  <% end %>
+
+
+  <% if main %>
+  <dt>Main author</dt> <dd><%= main %></dd>
+  <% end %>
+
+  <%if contribs.any? %>
+  <dt>Contributors</dt> 
+    <% contribs.each do |con| %>
+        <dd><%= con %></dd>
+    <% end %>
+
+    <% if doc["publisher_display"] %>
+    <dt>Published/Created</dt><dd><%= doc["publisher_display"].first %>
+<% end %>
+  </dl>
+  <% end %>
+
+
+</fields>
+</article>
+

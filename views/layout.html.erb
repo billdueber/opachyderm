@@ -9,6 +9,18 @@
       section { background-color: #afa; }
       aside  { background-color: #159; }
       footer { background-color: #999;}
+      h3 { margin-bottom: 0; font-size: 100%; }
+      dl {    
+        display: grid;
+        grid-template-columns: 9rem 1fr;
+        column-gap: 0.75rem;
+      }
+      dt {    grid-column-start: 1; }
+      dd {    grid-column-start: 2;  display: flex;}
+      dl.facet_counts dt {padding-bottom: 1em; }
+      dl.entry dt { font-weight: bold }
+
+      section.left { padding-right: 0em !important; }
     </style>
 
 
@@ -16,16 +28,32 @@
 
   <body data-r-c data-join>
     <header data-lg1><h1>Opachyderm</h1>
-    <div id="searchbox"><form method="get" target="/search/easter">Search  <input type="text"/></form></div>
+    <div id="searchbox"><form method="get" target="/search/easter">Search  
+    <input type="text" value="<%= search_terms %>"/></form></div>
     </header>
 
     <main data-lg1-2>
-      <%= yield %>
+    <h2>Search Results for <em><%= search_terms %></em> </h2>
+      <% documents.each do |doc| %>
+        <%= erb :search_result, locals: { doc: doc } %>
+        <hr/>
+      <% end %>
     </main>
 
-    <section data-sm1-2 data-lg1-4 data-lg2>
+    <section class="left" data-sm1-2 data-lg1-4 data-lg2>
       <h2>Facets and such</h2>
-      <div id="facets"></div>
+      <div id="facets">
+      <% facets.each_pair do |key, values| %>
+        <h3><%= key %></h3>
+        <dl class="facet_counts">
+          <% values.each do |term, count| %>
+            <dt><%= term %></dt>
+            <dd><%= count %></dd>
+            <% end %>
+        </dl>
+        <% end %>
+      </div>
+  
     </section>
     <aside data-sm1-2 data-lg1-4><h2>Other stuff?</h2></aside>
     <footer>Footer</footer>
