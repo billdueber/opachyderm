@@ -12,19 +12,17 @@ FAKEDATA = JSON.parse(File.read(DATA + "alzheimers.json"))
 
 fd_facets = FAKEDATA["facet_counts"]["facet_fields"]
 fd_facets.each_pair do |category, values|
-  arrarr = []
-  while values.any?
-    term = values.shift
-    count = values.shift
-    arrarr.push [term, count]
-  end
-  fd_facets[category] = arrarr.take(10)
+  fd_facets[category] = values.flatten(2).each_slice(2).to_a.take(10)
 end
 
-FAKEDATA["facet_counts"]["facet_fields"] = fd_facets
 
+fd2 = FAKEDATA["facet_counts"]["facet_fields"].dup
+fd2.each_pair do |category, values|
+  fd2[category] = values.flatten(2).each_slice(2).to_a.last(2)
+end
 
-
+FD1 = fd_facets
+FD2 = fd2
 
 Tilt.register Tilt[:erb], :"html.erb"
 
@@ -36,20 +34,24 @@ module Opachyderm
     set :views, here + "views"
 
     get "/" do
-      erb :index, layout: :layout
+      erb :index, layout: :layout, locals: { search_terms: "" }
     end
 
     get "/search/:search" do |search|
-      erb "", layout: :layout, 
-      locals: {
-        search_terms: search, 
-        documents: FAKEDATA["response"]["docs"],
-        facets: FAKEDATA["facet_counts"]["facet_fields"],
-        fake_data: FAKEDATA
-      }
+      erb :index, layout: :layout,
+          locals: {
+            search_terms: search,
+            documents: FAKEDATA["response"]["docs"],
+            facets: FD1,
+            fake_data: FAKEDATA
+          }
     end
 
-
+    get "/update/facets" do
+      erb :fd2,
+          layout: false,
+          locals: { facets: FD2 }
+    end
 
   end
 end

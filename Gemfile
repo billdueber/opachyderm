@@ -2,7 +2,7 @@
 
 source  "https://rubygems.org"
 
-gem "mlibrary_serach_parser"
+# gem "mlibrary_serach_parser"
 
 gem "sinatra", "~> 3"
 gem "rack"

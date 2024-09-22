@@ -1,0 +1,11 @@
+<div id="facets">
+    <% facets.each_pair do |key, values| %>
+    <h3><%= key %></h3>
+    <dl class="facet_counts">
+        <% values.each do |term, count| %>
+        <dt><%= term %></dt>
+        <dd><%= count %></dd>
+        <% end %>
+    </dl>
+    <% end %>
+</div>

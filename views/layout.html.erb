@@ -3,11 +3,11 @@
   <head>
     <title>Hi</title>
     <style>@import url(/css/r-c-min.css)</style>
-    <script src="/javascripts/htmx.js"></script>
+    <script src="/js/htmx.js"></script>
     <style>
-      header { background-color: #c99;}
-      section { background-color: #afa; }
-      aside  { background-color: #159; }
+      header { background-color: #999;}
+      section { background-color: #ddd; }
+      aside  { background-color: #ddd; }
       footer { background-color: #999;}
       h3 { margin-bottom: 0; font-size: 100%; }
       dl {    
@@ -30,14 +30,22 @@
     <header data-lg1><h1>Opachyderm</h1>
     <div id="searchbox"><form method="get" target="/search/easter">Search  
     <input type="text" value="<%= search_terms %>"/></form></div>
+
+      <div hx-target="#facets" hx-swap="outerHTML"     hx-trigger="click">
+        <button class="btn" hx-get="/update/facets">
+          Get new facets
+        </button>
+      </div>
     </header>
 
     <main data-lg1-2>
     <h2>Search Results for <em><%= search_terms %></em> </h2>
       <% documents.each do |doc| %>
-        <%= erb :search_result, locals: { doc: doc } %>
+        <%= erb :search_result, locals: { doc: doc } %> 
         <hr/>
-      <% end %>
+      <% end %> 
+
+
     </main>
 
     <section class="left" data-sm1-2 data-lg1-4 data-lg2>
@@ -46,16 +54,16 @@
       <% facets.each_pair do |key, values| %>
         <h3><%= key %></h3>
         <dl class="facet_counts">
-          <% values.each do |term, count| %>
-            <dt><%= term %></dt>
-            <dd><%= count %></dd>
+          <% values.each do |tc| %>
+            <dt><%= tc.first %></dt>
+            <dd><%= tc.last %></dd>
             <% end %>
         </dl>
         <% end %>
       </div>
   
     </section>
-    <aside data-sm1-2 data-lg1-4><h2>Other stuff?</h2></aside>
+    <aside data-sm1-2 data-lg1-4><h2>Other stuff?</h2><div id="fd2"></div></aside>
     <footer>Footer</footer>
   </body>
 
