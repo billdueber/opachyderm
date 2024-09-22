@@ -26,12 +26,14 @@
 
     </head>
 
-  <body data-r-c data-join>
-    <header data-lg1><h1>Opachyderm</h1>
-    <div id="searchbox"><form method="get" target="/search/easter">Search  
-    <input type="text" value="<%= search_terms %>"/></form></div>
+  <body data-r-c data-join hx-boost="true">
+    <header data-lg1><h1>Opachyderm
+<div>Random number: <%= Random.rand(1000) %></div></h1>
+    <div id="searchbox"><form method="get" target="/search/<%=Random.rand(1000)%>">Search  
+    <input type="text" value="<%= search_terms %>"/></form>
+    </div>
 
-      <div hx-target="#facets" hx-swap="outerHTML"     hx-trigger="click">
+      <div hx-target="#facets" hx-swap="outerHTML" hx-trigger="click">
         <button class="btn" hx-get="/update/facets">
           Get new facets
         </button>
@@ -44,8 +46,6 @@
         <%= erb :search_result, locals: { doc: doc } %> 
         <hr/>
       <% end %> 
-
-
     </main>
 
     <section class="left" data-sm1-2 data-lg1-4 data-lg2>
